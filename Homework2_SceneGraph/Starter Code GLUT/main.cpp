@@ -10,7 +10,9 @@
 using namespace glm;
 
 unsigned int lightLocation;
+unsigned int ambientColor;
 glm::vec3 lightPos;
+glm::vec3 ambColor; 
 
 //vertex arrays needed for drawing
 unsigned int vbo;
@@ -141,14 +143,17 @@ void init() {
 	u_projMatrixLocation = glGetUniformLocation(shaderProgram, "u_projMatrix");
 	
 	lightLocation = glGetUniformLocation(shaderProgram, "lightPos");
-	
+	ambientColor = glGetUniformLocation(shaderProgram, "ambient");
 	
 	//Always remember that it doesn't do much good if you don't have OpenGL actually use the shaders
 	glUseProgram(shaderProgram);
 	
-	lightPos = glm::vec3(0.f,2.f,-2.f);
+	lightPos = glm::vec3(-1.f,0.f,3.f);
 	glUniform3fv(lightLocation,1,&lightPos[0]);
-	
+
+	ambColor = glm::vec3(0.f,0.f,0.f);
+	glUniform3fv(ambientColor,1,&ambColor[0]);
+
 	resize(640, 480);
 	old = clock();
 }
@@ -189,7 +194,7 @@ void display() {
 	clock_t newTime = clock();
 
 	//part of the animation
-	rotation += 150 * (static_cast<float>(newTime - old) / static_cast<float>(CLOCKS_PER_SEC));
+	rotation -= 50 * (static_cast<float>(newTime - old) / static_cast<float>(CLOCKS_PER_SEC));
 
 	//create an identity matrix for the modelview matrix
 	glm::mat4 modelView = glm::mat4(1.0);
@@ -208,8 +213,8 @@ void display() {
 }
 
 void createCube(mat4 modelView) {
-	modelView = glm::rotate(modelView, rotation, glm::vec3(0, 1,0));
-	cube *c = new cube(glm::vec3(0.f,1.f,0.f),glm::vec3(0.f,0.6f,0.9f));
+	modelView = glm::rotate(modelView, rotation, glm::vec3(0,1,0));
+	cylinder *c = new cylinder();
 	c->constructBuffers();
 	vector<float> vertices = c->vbo;
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -251,7 +256,7 @@ void createCube(mat4 modelView) {
 	glUniformMatrix4fv(u_modelMatrixLocation, 1, GL_FALSE, &modelView[0][0]);
 
 	//draw the elements
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+	glDrawElements(GL_TRIANGLES, indices.size() * sizeof(unsigned short), GL_UNSIGNED_SHORT, 0);
 	
 	//shut off the information since we're done drawing
 	glDisableVertexAttribArray(positionLocation);
