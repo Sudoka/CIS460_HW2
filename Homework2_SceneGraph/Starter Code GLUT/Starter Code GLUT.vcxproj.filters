@@ -21,7 +21,7 @@
     <ClCompile Include="glew.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cube.cpp">
+    <ClCompile Include="primative.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,13 +29,10 @@
     <ClInclude Include="glew.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cube.h">
+    <ClInclude Include="primative.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="cylinder.h">
-      <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sphere.h">
+    <ClInclude Include="furniture.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>

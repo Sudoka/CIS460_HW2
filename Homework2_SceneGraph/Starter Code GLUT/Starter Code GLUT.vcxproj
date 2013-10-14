@@ -78,15 +78,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cube.cpp" />
+    <ClCompile Include="primative.cpp" />
     <ClCompile Include="glew.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cube.h" />
-    <ClInclude Include="cylinder.h" />
+    <ClInclude Include="furniture.h" />
     <ClInclude Include="glew.h" />
-    <ClInclude Include="sphere.h" />
+    <ClInclude Include="primative.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="diffuseFrag.frag" />

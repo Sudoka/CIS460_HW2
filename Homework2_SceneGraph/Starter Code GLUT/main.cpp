@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <time.h>
-#include "cube.h"
+#include "furniture.h"
 
 using namespace glm;
 
@@ -146,7 +146,7 @@ void init() {
 	//Always remember that it doesn't do much good if you don't have OpenGL actually use the shaders
 	glUseProgram(shaderProgram);
 	
-	lightPos = glm::vec3(0.f,2.f,1.f);
+	lightPos = glm::vec3(0.f,2.f,-2.f);
 	glUniform3fv(lightLocation,1,&lightPos[0]);
 	
 	resize(640, 480);
@@ -197,9 +197,9 @@ void display() {
 	//Draw the two components of our scene separately, for your scenegraphs it will help
 	//your sanity to do separate draws for each type of primitive geometry, otherwise your VBOs will
 	//get very, very complicated fast
-	createRedSquare(modelView);	//PASS MODELVIEW BY COPY to get the nice scoping for hierarchical (i'm sure i spelled that wrong) transformations
+	//createRedSquare(modelView);	//PASS MODELVIEW BY COPY to get the nice scoping for hierarchical (i'm sure i spelled that wrong) transformations
 								//like Norm mentioned in his Scene Graph lecture
-	createBlueSquare(modelView);
+	//createBlueSquare(modelView);
 
 	createCube(modelView);
 
@@ -208,8 +208,8 @@ void display() {
 }
 
 void createCube(mat4 modelView) {
-	modelView = glm::rotate(modelView, rotation, glm::vec3(0, 0, 1));
-	cube *c = new cube();
+	modelView = glm::rotate(modelView, rotation, glm::vec3(0, 1,0));
+	cube *c = new cube(glm::vec3(0.f,1.f,0.f),glm::vec3(0.f,0.6f,0.9f));
 	c->constructBuffers();
 	vector<float> vertices = c->vbo;
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -242,7 +242,7 @@ void createCube(mat4 modelView) {
 	glBindBuffer(GL_ARRAY_BUFFER, nbo);
 	glVertexAttribPointer(normalLocation, 4, GL_FLOAT, 0, 0, static_cast<char*>(0));
 
-	vector<float> indices = c->ibo;
+	vector<unsigned short> indices = c->ibo;
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
