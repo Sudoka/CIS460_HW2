@@ -141,11 +141,13 @@ void init() {
 	u_projMatrixLocation = glGetUniformLocation(shaderProgram, "u_projMatrix");
 	
 	lightLocation = glGetUniformLocation(shaderProgram, "lightPos");
-
-	lightPos = glm::vec3(0.f,2.f,1.f);
-	glUniform4fv(lightLocation,1,&lightPos[0]);
+	
+	
 	//Always remember that it doesn't do much good if you don't have OpenGL actually use the shaders
 	glUseProgram(shaderProgram);
+	
+	lightPos = glm::vec3(0.f,2.f,1.f);
+	glUniform3fv(lightLocation,1,&lightPos[0]);
 	
 	resize(640, 480);
 	old = clock();
@@ -173,7 +175,8 @@ void keypress(unsigned char key, int x, int y) {
 		break;
 	case 's':
 		lightPos = glm::vec3(lightPos.x,lightPos.y+0.5,lightPos.z);
-		glUniform4fv(lightLocation,1,&lightPos[0]);
+		glUniform3fv(lightLocation,1,&lightPos[0]);
+		glutPostRedisplay();
 		break;
 	}
 	glutPostRedisplay();

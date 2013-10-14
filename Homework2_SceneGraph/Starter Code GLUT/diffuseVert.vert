@@ -15,8 +15,6 @@ out vec3 fs_light_vector;
 out vec3 fs_color;
 
 void main() {
-	
-    
     // Set the color and normal as just the input from the VBOs,
 	// they only get interesting after they've been interpolated by the rasterizer
     fs_color = vs_color;
